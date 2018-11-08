@@ -39,5 +39,5 @@ begin
 end;
 ---------------------------------------------------------------------------------------------
 
-exec tSQLt.RunTestClass 'AcceleratorGetTestResults';
-go
+--exec tSQLt.RunTestClass 'AcceleratorGetTestResults';
+--go
