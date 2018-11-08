@@ -1,4 +1,4 @@
--- LAB 2: Testing a table structure
+-- LAB 5: Testing a table structure
 ---------------------------------------------------------------------------------------------
 
 exec tSQLt.NewTestClass @ClassName = N'AcceleratorTestResults'; -- nvarchar(max)
