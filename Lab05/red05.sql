@@ -13,7 +13,7 @@ go
 
 ---------------------------------------------------------------------------------------------
 
-alter procedure [AcceleratorTestResults].[Test TestResults table has required cols]
+create procedure [AcceleratorTestResults].[Test TestResults table has required cols]
 as
 if object_id(N'[AcceleratorTestResults].[Expected]') > 0
     drop table [AcceleratorTestResults].[Expected];
