@@ -1,4 +1,4 @@
--- LAB 2: Testing a table structure
+-- LAB 6: Testing an INSERT sproc
 ---------------------------------------------------------------------------------------------
 
 exec tSQLt.NewTestClass @ClassName = N'AcceleratorInsertTestResult'; -- nvarchar(max)
