@@ -136,5 +136,5 @@ go
 
 ---------------------------------------------------------------------------------------------
 
-exec tSQLt.RunTestClass 'AcceleratorRunTest';
-go
+-- exec tSQLt.RunTestClass 'AcceleratorRunTest'; GO
+
