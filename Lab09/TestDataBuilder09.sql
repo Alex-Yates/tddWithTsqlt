@@ -10,7 +10,7 @@ create procedure [TestDataBuilder].[ParticleBuilder]
     @Id int = 0
   , @X decimal(10, 2) = 0.0
   , @Y decimal(10, 2) = 0.0
-  , @Value nvarchar(max) = 0
+  , @Value nvarchar(max) = ''
   , @ColorId int = NULL
   , @ErrorMessageOut nvarchar(2000) = '' out
 )
