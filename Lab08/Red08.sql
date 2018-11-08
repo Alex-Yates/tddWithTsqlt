@@ -85,5 +85,4 @@ go
 
 ---------------------------------------------------------------------------------------------
 
-exec tSQLt.RunTestClass 'AcceleratorFoundHiggsBoson';
-go
+-- exec tSQLt.RunTestClass 'AcceleratorFoundHiggsBoson'; go
