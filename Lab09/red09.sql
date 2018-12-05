@@ -9,7 +9,6 @@ go
 
 create procedure [AcceleratorRunTest].[test RunTest correctly calculates average X and Y values with three particles]
 as
-
 -- ASSEMBLE
 
 exec tSQLt.FakeTable @TableName = N'TestResults'   -- nvarchar(max)
@@ -27,10 +26,10 @@ exec [TestDataBuilder].[ParticleBuilder] @id = 1, @X = 2.0, @Y = 5.0;
 exec [TestDataBuilder].[ParticleBuilder] @id = 2, @X = 2.5, @Y = 5.0;
 exec [TestDataBuilder].[ParticleBuilder] @id = 3, @X = 3.0, @Y = 2.0;
 
-declare @expectedX decimal(10, 2);
-set @expectedX = 2.5;
-declare @expectedY decimal(10, 2);
-set @expectedY = 4.0;
+declare @expectedX NVARCHAR(20);
+set @expectedX = 2.50;
+declare @expectedY NVARCHAR(20);
+set @expectedY = 4.00;
 
 exec tSQLt.SpyProcedure @ProcedureName = N'Accelerator.InsertTestResult';
 
@@ -40,18 +39,18 @@ exec Accelerator.RunTest
 
 -- ASSERT
 
-declare @actualX decimal(10, 2);
+declare @actualX NVARCHAR(20);
 set @actualX =
 (
-    select top (1) X from Accelerator.InsertTestResult_SpyProcedureLog
+    select top (1) AverageX from Accelerator.InsertTestResult_SpyProcedureLog
 );
-declare @actualY decimal(10, 2);
+declare @actualY NVARCHAR(20);
 set @actualY =
 (
-    select top (1) Y from Accelerator.InsertTestResult_SpyProcedureLog
+    select top (1) AverageY from Accelerator.InsertTestResult_SpyProcedureLog
 );
 
-declare @Xmsg nvarchar(200);
+declare @Xmsg nvarchar(20);
 set @Xmsg = N'Expected X value of 2.5 but was ' + @actualX;
 declare @Ymsg nvarchar(200);
 set @Ymsg = N'Expected Y value of 4.0 but was ' + @actualY;
@@ -91,7 +90,7 @@ exec [TestDataBuilder].[ParticleBuilder] @id = 2, @ColorId = 2;
 exec [TestDataBuilder].[ParticleBuilder] @id = 3, @ColorId = 1;
 exec [TestDataBuilder].[ParticleBuilder] @id = 4, @ColorId = 3;
 
-declare @ExpectedNumColors int;
+declare @ExpectedNumColours int;
 set @ExpectedNumColors = 3;
 
 exec tSQLt.SpyProcedure @ProcedureName = N'Accelerator.InsertTestResult';
@@ -102,14 +101,14 @@ exec Accelerator.RunTest
 
 -- ASSERT
 
-declare @ActualNumColors int;
-set @ActualNumColors =
+declare @ActualNumColours int;
+set @ActualNumColours =
 (
-    select top (1) NumColors from Accelerator.InsertTestResult_SpyProcedureLog
+    select top (1) NumColours from Accelerator.InsertTestResult_SpyProcedureLog
 );
 
-exec tSQLt.AssertEquals @Expected = @ExpectedNumColors
-                      , @Actual = @ActualNumColors;
+exec tSQLt.AssertEquals @Expected = @ExpectedNumColours
+                      , @Actual = @ActualNumColours;
 
 go
 
@@ -137,8 +136,8 @@ exec [TestDataBuilder].[ParticleBuilder] @id = 1, @ColorId = 1;
 exec [TestDataBuilder].[ParticleBuilder] @id = 3, @ColorId = 1;
 exec [TestDataBuilder].[ParticleBuilder] @id = 4, @ColorId = 3;
 
-declare @ExpectedNumColors int;
-set @ExpectedNumColors = 2;
+declare @ExpectedNumColours int;
+set @ExpectedNumColours = 2;
 
 exec tSQLt.SpyProcedure @ProcedureName = N'Accelerator.RunTest';
 
@@ -148,14 +147,14 @@ exec Accelerator.RunTest
 
 -- ASSERT
 
-declare @ActualNumColors int;
-set @ActualNumColors =
+declare @ActualNumColours int;
+set @ActualNumColours =
 (
-    select top (1) NumColors from Accelerator.InsertTestResult_SpyProcedureLog
+    select top (1) NumColours from Accelerator.InsertTestResult_SpyProcedureLog
 );
 
-exec tSQLt.AssertEquals @Expected = @ExpectedNumColors
-                      , @Actual = @ActualNumColors;
+exec tSQLt.AssertEquals @Expected = @ExpectedNumColours
+                      , @Actual = @ActualNumColours;
 
 go
 
