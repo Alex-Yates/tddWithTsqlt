@@ -9,6 +9,9 @@ go
 
 create procedure [AcceleratorRunTest].[test RunTest correctly calculates average X and Y values with three particles]
 as
+
+-- ASSEMBLE
+
 exec tSQLt.FakeTable @TableName = N'TestResults'   -- nvarchar(max)
                    , @SchemaName = N'Accelerator'; -- nvarchar(max)
 
@@ -29,17 +32,23 @@ set @expectedX = 2.5;
 declare @expectedY decimal(10, 2);
 set @expectedY = 4.0;
 
-exec tSQLt.SpyProcedure @ProcedureName = N'Accelerator.RunTest';
+exec tSQLt.SpyProcedure @ProcedureName = N'Accelerator.InsertTestResult';
+
+-- ACT
+
+exec Accelerator.RunTest
+
+-- ASSERT
 
 declare @actualX decimal(10, 2);
 set @actualX =
 (
-    select top (1) X from Accelerator.RunTest_SpyProcedureLog
+    select top (1) X from Accelerator.InsertTestResult_SpyProcedureLog
 );
 declare @actualY decimal(10, 2);
 set @actualY =
 (
-    select top (1) Y from Accelerator.RunTest_SpyProcedureLog
+    select top (1) Y from Accelerator.InsertTestResult_SpyProcedureLog
 );
 
 declare @Xmsg nvarchar(200);
@@ -61,6 +70,9 @@ go
 
 create procedure [AcceleratorRunTest].[test RunTest correctly calculates num of colors if all colors present]
 as
+
+-- ASSEMBLE
+
 exec tSQLt.FakeTable @TableName = N'TestResults'   -- nvarchar(max)
                    , @SchemaName = N'Accelerator'; -- nvarchar(max)
 
@@ -82,12 +94,18 @@ exec [TestDataBuilder].[ParticleBuilder] @id = 4, @ColorId = 3;
 declare @ExpectedNumColors int;
 set @ExpectedNumColors = 3;
 
-exec tSQLt.SpyProcedure @ProcedureName = N'Accelerator.RunTest';
+exec tSQLt.SpyProcedure @ProcedureName = N'Accelerator.InsertTestResult';
+
+-- ACT
+
+exec Accelerator.RunTest
+
+-- ASSERT
 
 declare @ActualNumColors int;
 set @ActualNumColors =
 (
-    select top (1) NumColors from Accelerator.RunTest_SpyProcedureLog
+    select top (1) NumColors from Accelerator.InsertTestResult_SpyProcedureLog
 );
 
 exec tSQLt.AssertEquals @Expected = @ExpectedNumColors
@@ -99,6 +117,9 @@ go
 
 create procedure [AcceleratorRunTest].[test RunTest correctly calculates num of colors if not all colors present]
 as
+
+-- ASSEMBLE
+
 exec tSQLt.FakeTable @TableName = N'TestResults'   -- nvarchar(max)
                    , @SchemaName = N'Accelerator'; -- nvarchar(max)
 
@@ -121,10 +142,16 @@ set @ExpectedNumColors = 2;
 
 exec tSQLt.SpyProcedure @ProcedureName = N'Accelerator.RunTest';
 
+-- ACT
+
+exec Accelerator.RunTest
+
+-- ASSERT
+
 declare @ActualNumColors int;
 set @ActualNumColors =
 (
-    select top (1) NumColors from Accelerator.RunTest_SpyProcedureLog
+    select top (1) NumColors from Accelerator.InsertTestResult_SpyProcedureLog
 );
 
 exec tSQLt.AssertEquals @Expected = @ExpectedNumColors
