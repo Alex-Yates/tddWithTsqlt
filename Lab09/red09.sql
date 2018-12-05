@@ -139,7 +139,7 @@ exec [TestDataBuilder].[ParticleBuilder] @id = 4, @ColorId = 3;
 declare @ExpectedNumColours int;
 set @ExpectedNumColours = 2;
 
-exec tSQLt.SpyProcedure @ProcedureName = N'Accelerator.RunTest';
+exec tSQLt.SpyProcedure @ProcedureName = N'Accelerator.InsertTestResult';
 
 -- ACT
 
